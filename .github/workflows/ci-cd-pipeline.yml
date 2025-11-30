@@ -73,12 +73,12 @@ jobs:
         run: |
           NEW_TAG=${{ needs.build-and-push.outputs.image_tag }}
           
-          sed -i "s|image: .*${{ env.BACKEND_IMAGE_NAME }}:.*|image: ${{ env.BACKEND_IMAGE_NAME }}:$NEW_TAG|g" ${{ env.MANIFEST_PATH }}/sbb-backend.yaml
+          sed -i "s|image: .*${{ env.BACKEND_IMAGE_NAME }}:.*|image: ${{ env.BACKEND_IMAGE_NAME }}:$NEW_TAG|g" ${{ env.MANIFEST_PATH }}/sbb-backend-deploy.yml
           
-          sed -i "s|image: .*${{ env.FRONTEND_IMAGE_NAME }}:.*|image: ${{ env.FRONTEND_IMAGE_NAME }}:$NEW_TAG|g" ${{ env.MANIFEST_PATH }}/sbb-frontend.yaml
+          sed -i "s|image: .*${{ env.FRONTEND_IMAGE_NAME }}:.*|image: ${{ env.FRONTEND_IMAGE_NAME }}:$NEW_TAG|g" ${{ env.MANIFEST_PATH }}/sbb-frontend-deploy.yml
           
-          cat ${{ env.MANIFEST_PATH }}/sbb-backend.yaml | grep image:
-          cat ${{ env.MANIFEST_PATH }}/sbb-frontend.yaml | grep image:
+          cat ${{ env.MANIFEST_PATH }}/sbb-backed-deploy.yml | grep Image:
+          cat ${{ env.MANIFEST_PATH }}/sbb-frontend-deploy.yml | grep Image:
 
       - name: Commit and Push Changes
         run: |
