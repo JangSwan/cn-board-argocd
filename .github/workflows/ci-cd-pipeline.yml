@@ -11,7 +11,7 @@ env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   BACKEND_IMAGE_NAME: jangswan/cn_board_app
   FRONTEND_IMAGE_NAME: jangswan/cn_board_nginx
-  MANIFEST_PATH: cn-board-menifests
+  MANIFEST_PATH: cn-board-manifests
 
 jobs:
   build-and-push:
