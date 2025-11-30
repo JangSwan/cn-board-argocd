@@ -77,7 +77,7 @@ jobs:
           
           sed -i "s|image: .*${{ env.FRONTEND_IMAGE_NAME }}:.*|image: ${{ env.FRONTEND_IMAGE_NAME }}:$NEW_TAG|g" ${{ env.MANIFEST_PATH }}/sbb-frontend-deploy.yml
           
-          cat ${{ env.MANIFEST_PATH }}/sbb-backed-deploy.yml | grep Image:
+          cat ${{ env.MANIFEST_PATH }}/sbb-backend-deploy.yml | grep Image:
           cat ${{ env.MANIFEST_PATH }}/sbb-frontend-deploy.yml | grep Image:
 
       - name: Commit and Push Changes
