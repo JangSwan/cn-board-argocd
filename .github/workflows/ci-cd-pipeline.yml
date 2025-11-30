@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main" ] 
     paths-ignore:        
-      - 'cn-board-menifests/**'
+      - 'cn-board-manifests/**'
       - 'README.md'
 
 env:
