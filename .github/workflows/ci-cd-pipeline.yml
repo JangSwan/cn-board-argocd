@@ -1,4 +1,4 @@
-name: SBB GitOps CI/CD Pipeline
+name: CN-SBB GitHub Actions CI Pipeline
 
 on:
   push:
@@ -60,35 +60,8 @@ jobs:
             ${{ env.FRONTEND_IMAGE_NAME }}:${{ steps.generate_tag.outputs.sha }}
             ${{ env.FRONTEND_IMAGE_NAME }}:latest
 
-  update-manifest:
-    needs: build-and-push
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }} 
 
-      - name: Update Kubernetes Manifests
-        run: |
-          NEW_TAG=${{ needs.build-and-push.outputs.image_tag }}
-          
-          sed -i "s|image: .*${{ env.BACKEND_IMAGE_NAME }}:.*|image: ${{ env.BACKEND_IMAGE_NAME }}:$NEW_TAG|g" ${{ env.MANIFEST_PATH }}/sbb-backend-deploy.yml
-          
-          sed -i "s|image: .*${{ env.FRONTEND_IMAGE_NAME }}:.*|image: ${{ env.FRONTEND_IMAGE_NAME }}:$NEW_TAG|g" ${{ env.MANIFEST_PATH }}/sbb-frontend-deploy.yml
-          
-          cat ${{ env.MANIFEST_PATH }}/sbb-backend-deploy.yml | grep Image:
-          cat ${{ env.MANIFEST_PATH }}/sbb-frontend-deploy.yml | grep Image:
-
-      - name: Commit and Push Changes
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          
-          if [[ -n $(git status -s) ]]; then
-            git add ${{ env.MANIFEST_PATH }}/*.yaml
-            git commit -m "Update K8s manifests to tag: ${{ needs.build-and-push.outputs.image_tag }}"
-            git push
-          else
-            echo "No changes to commit."
-          fi
+       - name: Print Image Tag
+         run: |
+           echo "Docker Image Build and Push Succeed."
+           echo "New Image Tag: ${{ steps.vars.outputs.sha_short }}"
