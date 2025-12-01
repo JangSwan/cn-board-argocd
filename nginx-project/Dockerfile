@@ -6,4 +6,4 @@ COPY bootstrap.min.css /usr/share/nginx/html/bootstrap.min.css
 COPY bootstrap.min.js /usr/share/nginx/html/bootstrap.min.js
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
-
+#CI Test
